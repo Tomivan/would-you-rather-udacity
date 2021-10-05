@@ -1,0 +1,12 @@
+// authedUser
+export const SET_AUTHED_USER = "SET_AUTHED_USER";
+
+// questions
+export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
+export const ADD_QUESTION = "ADD_QUESTION";
+export const SAVE_ANSWER = "SAVE_ANSWER";
+
+// users
+export const RECEIVE_USERS = "RECEIVE_USERS";
+export const ADD_QUESTION_TO_AUTHED_USER = "ADD_QUESTION_TO_AUTHED_USER";
+export const SAVE_ANSWER_TO_AUTHED_USER = "SAVE_ANSWER_TO_AUTHED_USER";
