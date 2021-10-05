@@ -98,3 +98,14 @@ Your code will talk to the database via 4 methods:
 ## Contributing
 
 This repository is the starter code for *all* Udacity students. Therefore, we most likely will not accept pull requests. For details, check out [CONTRIBUTING.md](https://github.com/udacity/reactnd-project-would-you-rather-starter/blob/master/CONTRIBUTING.md).
+
+
+Here is how you can load the application onto your local machine:
+
+Install node.js if you do not have it yet. It comes with npm(node package manager). Make sure that you install node with the PATH variable so you can run node anywhere in your command prompt/terminal.
+Install the react package using this command: npm install -g create-react-app
+Clone this repo or download it as a zip. if you download this as a zip, you will have to extract the files.
+In your command prompt/terminal, change directory to the project root.
+In order to install, run: npm install
+to start the react app, run: npm start
+Application will start in your default browser at: localhost:3000
