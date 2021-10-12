@@ -3,7 +3,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authed-user";
 
-import { Site, Nav, Grid, List, Button } from "tabler-react";
+import { Site, Nav, Grid } from "tabler-react";
 
 class SiteWrapper extends Component {
   logout = () => {
@@ -51,12 +51,6 @@ class SiteWrapper extends Component {
           name: users[authedUser].name,
           description: users[authedUser].id,
           options: [
-            {
-              icon: "help-circle",
-              value: "Need help?",
-              to:
-                "https://github.com/cangir/udacity-reactnd-would-you-rather#introduction"
-            },
             { icon: "log-out", value: "Sign Out", onClick: () => this.logout() }
           ]
         }
@@ -87,37 +81,8 @@ class SiteWrapper extends Component {
         navProps={{ itemsObjects: navBarItems }}
         footerProps={{
           copyright: (
-            <React.Fragment>
-              Copyright © 2019. All rights reserved.
-            </React.Fragment>
-          ),
-          nav: (
-            <React.Fragment>
-              <Grid.Col auto={true}>
-                <List className="list-inline list-inline-dots mb-0">
-                  <List.Item className="list-inline-item">
-                    <a href="https://github.com/cangir/udacity-reactnd-would-you-rather#introduction">
-                      Documentation
-                    </a>
-                  </List.Item>
-                  <List.Item className="list-inline-item">
-                    <a href="https://github.com/cangir/udacity-reactnd-would-you-rather/issues">
-                      Issues
-                    </a>
-                  </List.Item>
-                </List>
-              </Grid.Col>
-              <Grid.Col auto={true}>
-                <Button
-                  href="https://github.com/cangir/udacity-reactnd-would-you-rather"
-                  size="sm"
-                  outline
-                  color="primary"
-                  RootComponent="a"
-                >
-                  Source code
-                </Button>
-              </Grid.Col>
+            <React.Fragment className="text-center">
+              Copyright © 2021. All rights reserved.
             </React.Fragment>
           )
         }}
