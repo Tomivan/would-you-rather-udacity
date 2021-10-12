@@ -1,103 +1,95 @@
-
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { Button, Card, Form, Grid, Text } from "tabler-react";
-
-import { handleAddQuestion } from "../actions/shared";
-
-// Components
-import SiteWrapper from "./SiteWrapper";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import { handleAddQuestion } from '../actions/questions';
 
 class NewQuestion extends Component {
-  state = {
-    optionOneText: "",
-    optionTwoText: "",
-    redirect: false
-  };
+	state = {
+		optionOne: '',
+		optionTwo: '',
+		toHome: false
+	};
 
-  handleSubmit = e => {
-    e.preventDefault();
+	handleInputChange = (e) => {
+		const name = e.target.name;
+		const value = e.target.value;
+		this.setState({
+			[name]: value
+		});
+	};
 
-    const { optionOneText, optionTwoText } = this.state;
-    const { addQuestion } = this.props;
+	handleSubmit = (e) => {
+		const { optionOne, optionTwo } = this.state;
+		const { dispatch } = this.props;
 
-    addQuestion(optionOneText, optionTwoText);
+		e.preventDefault();
 
-    this.setState({ redirect: true });
-  };
+		this.setState(
+			{
+				optionOne: '',
+				optionTwo: '',
+				toHome: true
+			},
+			() => dispatch(handleAddQuestion(optionOne, optionTwo))
+		);
+	};
 
-  render() {
-    const { avatarURL, authedUserName } = this.props;
-    const { optionOneText, optionTwoText, redirect } = this.state;
+	render() {
+		const { optionOne, optionTwo, toHome } = this.state;
 
-    if (redirect) {
-      return <Redirect to="/" />;
-    }
+		if (toHome === true) return <Redirect to="/" />;
 
-    return (
-      <SiteWrapper>
-        <Grid.Row>
-          <Grid.Col lg={12}>
-            <Card className="card card-profile">
-              <div className="card-header bg-dark text-center">
-                <Text className="h3 text-white mx-auto mb-5">
-                  {authedUserName}
-                </Text>
-              </div>
-              <Card.Body className="text-center">
-                <img
-                  alt={"Avatar of " + authedUserName}
-                  className="card-profile-img"
-                  src={avatarURL}
-                />
-                <h3 className="mb-3 text-left">Would you rather...</h3>
-                <form onSubmit={this.handleSubmit}>
-                  <Form.Group>
-                    <Form.Input
-                      name="example-text-input"
-                      placeholder="Option one..."
-                      onChange={e =>
-                        this.setState({ optionOneText: e.target.value })
-                      }
-                    />
-                    <Text className="bg-blue-lightest font-weight-bold text-center p-2 mt-5">
-                      or
-                    </Text>
-                    <Form.Input
-                      className="mt-4"
-                      name="example-text-input"
-                      placeholder="Option two..."
-                      onChange={e =>
-                        this.setState({ optionTwoText: e.target.value })
-                      }
-                    />
-                  </Form.Group>
-                  <Button
-                    className="btn-block"
-                    color="primary"
-                    size="md"
-                    type="submit"
-                    disabled={optionOneText === "" || optionTwoText === ""}
-                  >
-                    Ask Question
-                  </Button>
-                </form>
-              </Card.Body>
-            </Card>
-          </Grid.Col>
-        </Grid.Row>
-      </SiteWrapper>
-    );
-  }
+		return (
+			<Fragment>
+				<h2 className="text-center my-3">
+					<small>Would You Rather...</small>
+				</h2>
+				<Row className="justify-content-center">
+					<Col xs={12} md={6}>
+						<Card bg="light" className="m-3 text-center">
+							<Card.Body>
+								<Form onSubmit={this.handleSubmit}>
+									<Form.Group controlId="optionOne">
+										<Form.Label>Choice One</Form.Label>
+										<Form.Control
+											type="text"
+											name="optionOne"
+											value={optionOne}
+											onChange={this.handleInputChange}
+										/>
+									</Form.Group>
+									<h3>
+										<small>OR</small>
+									</h3>
+									<Form.Group controlId="optionTwo">
+										<Form.Label>Choice Two</Form.Label>
+										<Form.Control
+											type="text"
+											name="optionTwo"
+											value={optionTwo}
+											onChange={this.handleInputChange}
+										/>
+									</Form.Group>
+									<Button
+										type="submit"
+										variant="outline-dark"
+										disabled={optionOne === '' || optionTwo === ''}
+									>
+										Submit
+									</Button>
+								</Form>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+			</Fragment>
+		);
+	}
 }
 
-const mapStateToProps = ({ authedUser, users }) => ({
-  authedUserName: users[authedUser].name,
-  avatarURL: users[authedUser].avatarURL
-});
-const mapDispatchToProps = dispatch => ({
-  addQuestion: (one, two) => dispatch(handleAddQuestion(one, two))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewQuestion);
+export default connect()(NewQuestion);

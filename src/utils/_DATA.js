@@ -2,7 +2,7 @@ let users = {
     faladedami: {
       id: 'faladedami',
       name: 'Falade Damilola',
-      avatarURL: '',
+      avatarURL: 'https://tylermcginnis.com/would-you-rather/dan.jpg',
       answers: {
         "8xf0y6ziyjabvozdd253nd": 'optionOne',
         "6ni6ok3ym7mf1p33lnez": 'optionTwo',
@@ -14,7 +14,7 @@ let users = {
     toluidowu: {
       id: 'toluidowu',
       name: 'Toluwalase Idowu',
-      avatarURL: '' ,
+      avatarURL: 'https://tylermcginnis.com/would-you-rather/sarah.jpg' ,
       answers: {
         "vthrdm985a262al8qx3do": 'optionOne',
         "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -24,7 +24,7 @@ let users = {
     boluadebisi: {
       id: 'boluadebisi',
       name: 'Boluwatife Adebisi',
-      avatarURL: '',
+      avatarURL: 'https://tylermcginnis.com/would-you-rather/tyler.jpg',
       answers: {
         "xj352vofupe1dqz9emx13r": 'optionOne',
         "vthrdm985a262al8qx3do": 'optionTwo',

@@ -2,13 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "tabler-react/dist/Tabler.css";
 
-import App from "./components/App";
+import App from "./App";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 import reducer from "./reducers";
 import middleware from "./middleware";
 import JavascriptTimeAgo from "javascript-time-ago";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // The desired locales.
 import en from "javascript-time-ago/locale/en";

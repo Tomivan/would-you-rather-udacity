@@ -1,83 +1,79 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { setAuthedUser } from "../actions/authed-user";
-import { Grid, Form, Button, Text, Page } from "tabler-react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { setAuthedUser } from '../actions/authed-user';
 
 class Login extends Component {
-  state = {
-    authedUser: ""
-  };
+	state = {
+		errorMsg: ''
+	};
 
-  changeUser = event => {
-    this.setState({ authedUser: event.target.value });
-  };
+	handleSubmit = (e) => {
+		const userID = this.userID.value;
+		const { dispatch } = this.props;
 
-  authorizeUser = () => {
-    this.props.dispatch(setAuthedUser(this.state.authedUser));
+		e.preventDefault();
 
-    let prevRouterPath =
-      this.props.location.state !== undefined
-        ? this.props.location.state.previous.pathname
-        : null;
-    prevRouterPath
-      ? this.props.history.push(prevRouterPath)
-      : this.props.history.push("/");
-  };
+		if (userID !== '') {
+			dispatch(setAuthedUser(userID));
+		} else {
+			this.setState({ errorMsg: 'You must choose a username' });
+		}
+	};
 
-  render() {
-    const { users } = this.props;
-    return (
-      <Page className="page-single">
-        <div className="container">
-          <div className="row">
-            <Grid.Col className="col-login mx-auto">
-              <Form className="card" autoComplete="off">
-                <div className="card-body p-6">
-                  <div className="card-title h6 text-center">
-                    Login to your account
-                  </div>
-                  <Form.Group label="Select User">
-                    <Form.Select
-                      value={this.state.authedUser}
-                      onChange={this.changeUser}
-                    >
-                      <option default disabled defaultValue value="">
-                        Select User
-                      </option>
-                      {users.map(user => (
-                        <option key={user.id} value={user.id}>
-                          {user.name}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-                  <Button
-                    block
-                    type="button"
-                    color="primary"
-                    onClick={this.authorizeUser}
-                  >
-                    Login
-                  </Button>
-                </div>
-              </Form>
-              <Text center="true" muted="true">
-                Select a user from above and click the login button.
-              </Text>
-            </Grid.Col>
-          </div>
-        </div>
-      </Page>
-    );
-  }
+	render() {
+		const { userNames } = this.props;
+		const { errorMsg } = this.state;
+
+		return (
+			<Row className="justify-content-center align-items-center min-vh-100">
+				<Col xs={12} md={4}>
+					<Card bg="light" className="text-center">
+						<Card.Header>Login</Card.Header>
+						<Card.Body>
+							<Form onSubmit={this.handleSubmit}>
+								<Form.Group controlId="formGridState">
+									<Form.Label>Username</Form.Label>
+									{errorMsg ? (
+										<p className="text-danger">{errorMsg}</p>
+									) : null}
+
+									<Form.Control
+										as="select"
+										ref={(id) => (this.userID = id)}
+									>
+										<option value="">Select user</option>
+										{userNames.map((item) => (
+											<option value={item.value} key={item.value}>
+												{item.label}
+											</option>
+										))}
+									</Form.Control>
+								</Form.Group>
+
+								<Button type="submit" variant="outline-dark">
+									Login
+								</Button>
+							</Form>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		);
+	}
 }
 
-function mapStateToProps({ authedUser, users }) {
-  return {
-    users: Object.values(users),
-    authedUser: authedUser
-  };
+function mapStateToProps({ users }) {
+	return {
+		userNames: Object.keys(users).map((id) => ({
+			value: id,
+			label: users[id].name
+		}))
+	};
 }
 
-export default withRouter(connect(mapStateToProps)(Login));
+export default connect(mapStateToProps)(Login);
